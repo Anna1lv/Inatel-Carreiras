@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Tema escuro controlado por nós: basta a classe "dark" no <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Cores do Inatel Acadêmico (viram classes como bg-inatel-azul) */
+@theme {
+  --color-inatel-azul: #0166c0;
+  --color-inatel-azul-escuro: #1c4363;
+}
