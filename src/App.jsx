@@ -1,24 +1,26 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import RotaProtegida from "./components/RotaProtegida";
+import AppLayout from "./layouts/AppLayout";
 import Login from "./pages/Login";
-import { useAuth } from "./context/AuthContext";
-
-function Provisoria() {
-  const { usuario, logout } = useAuth();
-  if (!usuario) return <Navigate to="/login" replace />;
-  return (
-    <div className="min-h-screen bg-white p-6 text-neutral-900 dark:bg-black dark:text-white">
-      <p>Logado como {usuario.nome} ({usuario.curso})</p>
-      <button type="button" onClick={logout} className="mt-4 underline">Sair</button>
-    </div>
-  );
-}
+import Avisos from "./pages/Avisos";
+import SecaoPlaceholder from "./pages/SecaoPlaceholder";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/avisos" element={<Provisoria />} />
-      <Route path="*" element={<Navigate to="/login" replace />} />
+
+      {/* Tudo dentro daqui exige login */}
+      <Route element={<RotaProtegida />}>
+        {/* ...e usa o menu lateral compartilhado */}
+        <Route element={<AppLayout />}>
+          <Route path="/avisos" element={<Avisos />} />
+          <Route path="/mercado-de-trabalho" element={<SecaoPlaceholder />} />
+          <Route path="/secao/:nome" element={<SecaoPlaceholder />} />
+        </Route>
+      </Route>
+
+      <Route path="*" element={<Navigate to="/avisos" replace />} />
     </Routes>
   );
 }
