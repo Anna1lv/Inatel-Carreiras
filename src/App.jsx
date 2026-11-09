@@ -1,17 +1,13 @@
-import { Route, Routes } from "react-router-dom";
+import Button from "./components/Button";
+import Header from "./components/Header";
 
-const Teste = () => (
-  <div className="min-h-screen bg-white dark:bg-black">
-    <header className="bg-inatel-azul dark:bg-inatel-azul-escuro p-4 text-white">
-      Avisos
-    </header>
-  </div>
-);
-
-const App = () => (
-  <Routes>
-    <Route path="/" element={<Teste />} />
-  </Routes>
-);
-
-export default App;
+export default function App() {
+  return (
+    <div className="min-h-screen bg-white text-neutral-900 dark:bg-black dark:text-white">
+      <Header titulo="Acadêmico" />
+      <main className="p-6">
+        <Button>Botão de teste</Button>
+      </main>
+    </div>
+  );
+}

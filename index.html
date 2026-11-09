@@ -1,10 +1,20 @@
 <!doctype html>
-<html lang="pt_BR">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>App Inatel</title>
+    <script>
+      (function () {
+        try {
+          var salvo = JSON.parse(localStorage.getItem("tema"));
+          var escuro = salvo
+            ? salvo === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (escuro) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
