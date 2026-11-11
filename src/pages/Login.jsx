@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Header from "../components/Header";
 import { useAuth } from "../context/AuthContext";
 import { cursos } from "../data/cursos";
+import Logo from "../components/Logo";
 
 const campo =
   "w-full rounded-md border bg-white px-3 py-3 text-center text-base text-neutral-900 outline-none focus:border-inatel-azul focus:ring-2 focus:ring-inatel-azul/30 dark:bg-black dark:text-white";
@@ -49,12 +50,9 @@ export default function Login() {
       <Header titulo="Acadêmico" />
 
       <main className="mx-auto max-w-md px-6 pb-10 pt-12 md:mt-10 md:rounded-xl md:border md:border-neutral-200 md:bg-white md:dark:border-neutral-800 md:dark:bg-black">
-        <p
-          aria-label="Inatel"
-          className="text-center text-6xl font-extrabold italic tracking-tight text-inatel-azul dark:text-blue-500"
-        >
-          Inatel
-        </p>
+        <div className="flex justify-center">
+          <Logo largura={160} className="text-inatel-azul dark:text-blue-500" />
+        </div>
         <p className="mb-8 mt-8 text-center text-neutral-500 dark:text-neutral-400">
           Entre com suas credenciais.
         </p>
