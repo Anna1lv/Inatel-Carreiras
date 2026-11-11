@@ -10,3 +10,10 @@ export function formatarDataHora(iso) {
     })
     .replace(",", "");
 }
+
+
+// "2026-11-06" -> "06/11/2026"
+// O timeZone "UTC" evita que a data "volte um dia" no fuso do Brasil.
+export function formatarData(iso) {
+  return new Date(iso).toLocaleDateString("pt-BR", { timeZone: "UTC" });
+}
