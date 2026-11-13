@@ -6,6 +6,7 @@ import Avisos from "./pages/Avisos";
 import DetalhesVaga from "./pages/DetalhesVaga";
 import Login from "./pages/Login";
 import MercadoTrabalho from "./pages/MercadoTrabalho";
+import MinhasVagas from "./pages/MinhasVagas";
 import SecaoPlaceholder from "./pages/SecaoPlaceholder";
 
 const volta = { voltarPara: "/mercado-de-trabalho", voltarTexto: "Voltar para as vagas" };
@@ -22,7 +23,7 @@ export default function App() {
           {/* Telas do Mercado de Trabalho que têm a barra inferior */}
           <Route path="/mercado-de-trabalho" element={<MercadoLayout />}>
             <Route index element={<MercadoTrabalho />} />
-            <Route path="minhas-vagas" element={<SecaoPlaceholder titulo="Minhas Vagas" mensagem="Esta área será construída na Fase 5." {...volta} />} />
+            <Route path="minhas-vagas" element={<MinhasVagas />} />
             <Route path="curriculo" element={<SecaoPlaceholder titulo="Currículo" mensagem="Esta área será construída na Fase 5." {...volta} />} />
             <Route path="notificacoes" element={<SecaoPlaceholder titulo="Avisos de vagas" mensagem="Esta área será construída na Fase 5." {...volta} />} />
           </Route>
