@@ -3,6 +3,7 @@ import RotaProtegida from "./components/RotaProtegida";
 import AppLayout from "./layouts/AppLayout";
 import MercadoLayout from "./layouts/MercadoLayout";
 import Avisos from "./pages/Avisos";
+import Curriculo from "./pages/Curriculo";
 import DetalhesVaga from "./pages/DetalhesVaga";
 import Login from "./pages/Login";
 import MercadoTrabalho from "./pages/MercadoTrabalho";
@@ -24,7 +25,7 @@ export default function App() {
           <Route path="/mercado-de-trabalho" element={<MercadoLayout />}>
             <Route index element={<MercadoTrabalho />} />
             <Route path="minhas-vagas" element={<MinhasVagas />} />
-            <Route path="curriculo" element={<SecaoPlaceholder titulo="Currículo" mensagem="Esta área será construída na Fase 5." {...volta} />} />
+            <Route path="curriculo" element={<Curriculo />} />
             <Route path="notificacoes" element={<SecaoPlaceholder titulo="Avisos de vagas" mensagem="Esta área será construída na Fase 5." {...volta} />} />
           </Route>
 
