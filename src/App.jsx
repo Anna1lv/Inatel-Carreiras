@@ -8,9 +8,8 @@ import DetalhesVaga from "./pages/DetalhesVaga";
 import Login from "./pages/Login";
 import MercadoTrabalho from "./pages/MercadoTrabalho";
 import MinhasVagas from "./pages/MinhasVagas";
+import Notificacoes from "./pages/Notificacoes";
 import SecaoPlaceholder from "./pages/SecaoPlaceholder";
-
-const volta = { voltarPara: "/mercado-de-trabalho", voltarTexto: "Voltar para as vagas" };
 
 export default function App() {
   return (
@@ -26,7 +25,7 @@ export default function App() {
             <Route index element={<MercadoTrabalho />} />
             <Route path="minhas-vagas" element={<MinhasVagas />} />
             <Route path="curriculo" element={<Curriculo />} />
-            <Route path="notificacoes" element={<SecaoPlaceholder titulo="Avisos de vagas" mensagem="Esta área será construída na Fase 5." {...volta} />} />
+            <Route path="notificacoes" element={<Notificacoes />} />
           </Route>
 
           {/* Detalhes ficam fora do layout: não têm barra inferior */}
