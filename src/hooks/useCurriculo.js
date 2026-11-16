@@ -54,7 +54,7 @@ export function useCurriculo() {
     }
   }
 
-  async function remover() {
+    async function remover() {
     setErro("");
     try {
       await removerCurriculo();
@@ -75,5 +75,5 @@ export function useCurriculo() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  return { curriculo, carregando, erro, anexar, baixar, remover };
+    return { curriculo, carregando, erro, anexar, baixar, remover };
 }
