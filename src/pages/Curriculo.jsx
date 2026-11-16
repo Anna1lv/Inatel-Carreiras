@@ -1,21 +1,28 @@
-import { Download, FileText, LoaderCircle } from "lucide-react";
-import { useRef } from "react";
+import { Download, FileText, LoaderCircle, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
 import Header from "../components/Header";
+import Modal from "../components/Modal";
 import { useCurriculo } from "../hooks/useCurriculo";
 import { formatarDataHora } from "../utils/formatarData";
 import { formatarTamanho } from "../utils/formatarTamanho";
 
 export default function Curriculo() {
   const { abrirMenu } = useOutletContext();
-  const { curriculo, carregando, erro, anexar, baixar } = useCurriculo();
+  const { curriculo, carregando, erro, anexar, baixar, remover } = useCurriculo();
+  const [confirmarExclusao, setConfirmarExclusao] = useState(false);
   const campoArquivo = useRef(null); // referência ao <input type="file"> escondido
 
   async function aoEscolher(evento) {
     const arquivo = evento.target.files[0];
     evento.target.value = ""; // permite escolher o mesmo arquivo de novo
     if (arquivo) await anexar(arquivo);
+  }
+
+  async function excluir() {
+    setConfirmarExclusao(false);
+    await remover();
   }
 
   return (
@@ -53,10 +60,16 @@ export default function Curriculo() {
                   </p>
                 </div>
               </div>
-              <Button variante="secundario" onClick={baixar} className="mt-3 flex items-center justify-center gap-2">
-                <Download size={18} />
-                Baixar
-              </Button>
+              <div className="mt-3 flex gap-2">
+                <Button variante="secundario" onClick={baixar} className="flex items-center justify-center gap-2">
+                  <Download size={18} />
+                  Baixar
+                </Button>
+                <Button variante="secundario" onClick={() => setConfirmarExclusao(true)} className="flex items-center justify-center gap-2">
+                  <Trash2 size={18} />
+                  Excluir
+                </Button>
+              </div>
             </div>
           )
         )}
@@ -82,6 +95,22 @@ export default function Curriculo() {
           ser validado. O arquivo fica guardado só neste navegador.
         </p>
       </main>
+
+      <Modal
+        aberto={confirmarExclusao}
+        titulo="Excluir currículo?"
+        onFechar={() => setConfirmarExclusao(false)}
+        acoes={
+          <>
+            <Button onClick={excluir}>Excluir</Button>
+            <Button variante="secundario" onClick={() => setConfirmarExclusao(false)}>
+              Cancelar
+            </Button>
+          </>
+        }
+      >
+        <p>O arquivo será removido deste navegador. Essa ação não pode ser desfeita.</p>
+      </Modal>
     </>
   );
 }

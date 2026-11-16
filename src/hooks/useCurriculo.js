@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { buscarCurriculo, salvarCurriculo } from "../utils/curriculoDB";
+import { buscarCurriculo, removerCurriculo, salvarCurriculo } from "../utils/curriculoDB";
 
 const TAMANHO_MAXIMO = 5 * 1024 * 1024; // 5 MB
 
@@ -54,6 +54,16 @@ export function useCurriculo() {
     }
   }
 
+  async function remover() {
+    setErro("");
+    try {
+      await removerCurriculo();
+      setCurriculo(null);
+    } catch {
+      setErro("Não foi possível excluir o arquivo.");
+    }
+  }
+
   function baixar() {
     const url = URL.createObjectURL(curriculo.arquivo);
     const link = document.createElement("a");
@@ -65,5 +75,5 @@ export function useCurriculo() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-  return { curriculo, carregando, erro, anexar, baixar };
+  return { curriculo, carregando, erro, anexar, baixar, remover };
 }

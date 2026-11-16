@@ -33,3 +33,7 @@ export const salvarCurriculo = (registro) =>
 
 export const buscarCurriculo = () =>
   executar("readonly", (loja) => loja.get("principal"));
+
+
+export const removerCurriculo = () =>
+  executar("readwrite", (loja) => loja.delete("principal"));
