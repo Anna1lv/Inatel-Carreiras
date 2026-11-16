@@ -9,7 +9,7 @@ import Login from "./pages/Login";
 import MercadoTrabalho from "./pages/MercadoTrabalho";
 import MinhasVagas from "./pages/MinhasVagas";
 import Notificacoes from "./pages/Notificacoes";
-import SecaoPlaceholder from "./pages/SecaoPlaceholder";
+import SecaoMenu from "./pages/SecaoMenu";
 
 export default function App() {
   return (
@@ -31,7 +31,7 @@ export default function App() {
           {/* Detalhes ficam fora do layout: não têm barra inferior */}
           <Route path="/mercado-de-trabalho/vaga/:id" element={<DetalhesVaga />} />
 
-          <Route path="/secao/:nome" element={<SecaoPlaceholder />} />
+          <Route path="/secao/:nome" element={<SecaoMenu />} />
         </Route>
       </Route>
 
