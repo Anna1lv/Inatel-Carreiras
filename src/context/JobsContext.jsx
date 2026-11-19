@@ -3,24 +3,23 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const JobsContext = createContext(null);
 
-export function JobsProvider({ children }) {
-  // Guardamos só os IDs das vagas
-  const [salvas, setSalvas] = useLocalStorage("vagasSalvas", []);
-  const [candidaturas, setCandidaturas] = useLocalStorage("vagasCandidatadas", []);
+// Guardamos a VAGA INTEIRA (não só o id): vagas do site mudam de página,
+// e assim "Minhas Vagas" continua mostrando o que o aluno salvou.
+const alternar = (lista, vaga) =>
+  lista.some((v) => v.id === vaga.id) ? lista.filter((v) => v.id !== vaga.id) : [vaga, ...lista];
 
-  function alternarSalva(id) {
-    setSalvas((atual) =>
-      atual.includes(id) ? atual.filter((x) => x !== id) : [...atual, id],
-    );
-  }
+export function JobsProvider({ children }) {
+  const [salvas, setSalvas] = useLocalStorage("vagasSalvasV2", []);
+  const [candidaturas, setCandidaturas] = useLocalStorage("vagasCandidatadasV2", []);
+
+  const alternarSalva = (vaga) => setSalvas((atual) => alternar(atual, vaga));
 
   // Marcação pessoal do aluno: o app NÃO envia candidatura
-  function marcarCandidatura(id) {
-    setCandidaturas((atual) => (atual.includes(id) ? atual : [...atual, id]));
-  }
+  const marcarCandidatura = (vaga) =>
+    setCandidaturas((atual) => (atual.some((v) => v.id === vaga.id) ? atual : [vaga, ...atual]));
 
-  const estaSalva = (id) => salvas.includes(id);
-  const jaCandidatou = (id) => candidaturas.includes(id);
+  const estaSalva = (id) => salvas.some((v) => v.id === id);
+  const jaCandidatou = (id) => candidaturas.some((v) => v.id === id);
 
   return (
     <JobsContext.Provider

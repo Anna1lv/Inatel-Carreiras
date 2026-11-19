@@ -17,3 +17,8 @@ export function formatarDataHora(iso) {
 export function formatarData(iso) {
   return new Date(iso).toLocaleDateString("pt-BR", { timeZone: "UTC" });
 }
+
+// Data com ou sem horário: "2026-11-13T21:53:00" -> "13/11/2026 21:53" | "2026-11-06" -> "06/11/2026"
+export function formatarPublicacao(iso) {
+  return iso.includes("T") ? formatarDataHora(iso) : formatarData(iso);
+}

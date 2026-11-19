@@ -63,4 +63,7 @@ const vagas = [
 
 // Horário de publicação (demonstrativo), na mesma ordem das vagas
 const horas = ["10:30", "09:00", "14:00", "11:15", "16:40", "08:20", "13:05", "15:50", "10:05"];
-export const vagasDemo = vagas.map((vaga, i) => ({ ...vaga, horaPublicacao: horas[i] }));
+export const vagasDemo = vagas.map((vaga, i) => ({
+  ...vaga,
+  dataPublicacao: `${vaga.dataPublicacao}T${horas[i]}:00`,
+}));

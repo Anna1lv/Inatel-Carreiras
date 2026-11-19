@@ -4,4 +4,6 @@ export const cursos = [
   "Engenharia Elétrica",
   "Engenharia de Software",
   "Engenharia de Telecomunicações",
+  "Engenharia Biomédica",
+  "Engenharia de Produção",
 ];

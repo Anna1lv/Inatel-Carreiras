@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
-import { listarVagas } from "../services/jobsService";
+import { definirFonte, listarVagas, obterFonte } from "../services/jobsService";
 
-// Carrega todas as vagas, com estados de carregando e erro.
-export function useVagas() {
+// Carrega vagas por páginas (primeira página + "carregar mais").
+export function useVagas(categoria = "todas") {
+  const [fonte, setFonte] = useState(obterFonte);
   const [vagas, setVagas] = useState([]);
+  const [pagina, setPagina] = useState(1);
+  const [temMais, setTemMais] = useState(false);
   const [carregando, setCarregando] = useState(true);
+  const [carregandoMais, setCarregandoMais] = useState(false);
   const [erro, setErro] = useState("");
+  const [erroMais, setErroMais] = useState("");
+  const [tentativa, setTentativa] = useState(0);
 
   useEffect(() => {
-    let atual = true;
-    listarVagas()
-      .then((dados) => {
-        if (atual) setVagas(dados);
+    let atual = true; // ignora respostas de pedidos antigos
+    setCarregando(true);
+    setErro("");
+    setErroMais("");
+    setVagas([]);
+    listarVagas({ categoria, pagina: 1 })
+      .then((r) => {
+        if (!atual) return;
+        setVagas(r.vagas);
+        setTemMais(r.temMais);
+        setPagina(1);
       })
-      .catch(() => {
-        if (atual) setErro("Não foi possível carregar as vagas.");
+      .catch((e) => {
+        if (atual) setErro(e.message);
       })
       .finally(() => {
         if (atual) setCarregando(false);
@@ -22,7 +35,30 @@ export function useVagas() {
     return () => {
       atual = false;
     };
-  }, []);
+  }, [categoria, fonte, tentativa]);
 
-  return { vagas, carregando, erro };
+  async function carregarMais() {
+    setCarregandoMais(true);
+    setErroMais("");
+    try {
+      const r = await listarVagas({ categoria, pagina: pagina + 1 });
+      setVagas((atual) => [...atual, ...r.vagas.filter((n) => !atual.some((v) => v.id === n.id))]);
+      setTemMais(r.temMais);
+      setPagina(pagina + 1);
+    } catch (e) {
+      setErroMais(e.message);
+    } finally {
+      setCarregandoMais(false);
+    }
+  }
+
+  function trocarFonte(nova) {
+    definirFonte(nova);
+    setFonte(nova);
+  }
+
+  return {
+    vagas, carregando, erro, temMais, carregarMais, carregandoMais, erroMais, fonte, trocarFonte,
+    recarregar: () => setTentativa((n) => n + 1),
+  };
 }
