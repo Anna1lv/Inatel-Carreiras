@@ -29,6 +29,12 @@ export const secoesMenu = [
     itens: [{ nome: "Avisos", icone: Mail, rota: "/avisos" }],
   },
   {
+    titulo: "Serviços",
+    itens: [
+      { nome: "Mercado de Trabalho", icone: Briefcase, rota: "/mercado-de-trabalho", novo: true },
+    ],
+  },
+  {
     titulo: "Aproveitamento Escolar",
     itens: [
       { nome: "Notas", icone: ChartColumn, rota: "/secao/notas" },
@@ -63,12 +69,6 @@ export const secoesMenu = [
   {
     titulo: "Financeiro",
     itens: [{ nome: "Tesouraria", icone: CircleDollarSign, rota: "/secao/tesouraria" }],
-  },
-  {
-    titulo: "Serviços",
-    itens: [
-      { nome: "Mercado de Trabalho", icone: Briefcase, rota: "/mercado-de-trabalho", novo: true },
-    ],
   },
   {
     titulo: "Outras Opções",
