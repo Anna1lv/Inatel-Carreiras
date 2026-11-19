@@ -18,7 +18,7 @@ const REGEX_DATA = /(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})/;
 function inferirTipo(titulo) {
   const t = titulo.toLowerCase();
   if (t.includes("trainee")) return "Trainee";
-  if (/est[aá]gi/.test(t)) return "Estágio";
+  if (/est[aá]gi|\bintern(ship)?\b/.test(t)) return "Estágio";
   return "Emprego";
 }
 
@@ -86,7 +86,7 @@ export async function listarPagina(categoria, pagina) {
       "User-Agent": "App-Inatel-Prototipo (projeto academico de IHM)",
       "Accept-Language": "pt-BR",
     },
-    signal: AbortSignal.timeout(10000),
+    signal: AbortSignal.timeout(8000),
   });
   if (!resposta.ok) throw new Error(`O site respondeu ${resposta.status}`);
 

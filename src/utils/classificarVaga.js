@@ -4,7 +4,7 @@ const [COMPUTACAO, AUTOMACAO, ELETRICA, SOFTWARE, TELECOM, BIOMEDICA, PRODUCAO] 
 
 // A lista do site não informa o curso: inferimos pelo TÍTULO da vaga (aproximação).
 const REGRAS = [
-  [/software|desenvolv|programacao|programador|mobile|android|\bios\b|front-?end|back-?end|full ?stack|dados|\bdata\b|\bia\b|inteligencia artificial|machine|devops|cloud|\bsap\b|abap|python|\bjava\b|\bqa\b|\bteste|sistemas|\bti\b|suporte tecnico/, [SOFTWARE, COMPUTACAO]],
+  [/software|desenvolv|programacao|programador|mobile|android|\bios\b|front-?end|back-?end|full ?stack|dados|\bdata\b|\bia\b|inteligencia artificial|machine|devops|cloud|\bsap\b|abap|python|\bjava\b|\bqa\b|\bteste|sistemas|\bti\b|\bit\b|suporte tecnico/, [SOFTWARE, COMPUTACAO]],
   [/eletric|eletron|energia|potencia|subestac/, [ELETRICA]],
   [/automacao|controle|scada|\bclp\b|mecatron|robot/, [AUTOMACAO, ELETRICA]],
   [/telecom|\bredes?\b|\brf\b|radio|\b5g\b|\b6g\b|antena|fibra|\biot\b/, [TELECOM]],

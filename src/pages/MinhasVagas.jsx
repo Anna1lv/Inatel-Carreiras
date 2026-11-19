@@ -1,4 +1,3 @@
-import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
@@ -6,7 +5,6 @@ import Header from "../components/Header";
 import JobCard from "../components/JobCard";
 import { useAuth } from "../context/AuthContext";
 import { useJobs } from "../context/JobsContext";
-import { useVagas } from "../hooks/useVagas";
 
 const vazio = {
   salvas: {
@@ -25,13 +23,12 @@ export default function MinhasVagas() {
   const navigate = useNavigate();
   const { usuario } = useAuth();
   const { salvas, candidaturas } = useJobs();
-  const { vagas, carregando, erro } = useVagas();
   const [aba, setAba] = useState("salvas");
 
-  const ids = aba === "salvas" ? salvas : candidaturas;
-  const lista = vagas
-    .filter((vaga) => ids.includes(vaga.id))
-    .sort((a, b) => b.dataPublicacao.localeCompare(a.dataPublicacao));
+  // As vagas já estão guardadas por inteiro no JobsContext
+  const lista = [...(aba === "salvas" ? salvas : candidaturas)].sort((a, b) =>
+    b.dataPublicacao.localeCompare(a.dataPublicacao),
+  );
 
   const abas = [
     ["salvas", `Salvas (${salvas.length})`],
@@ -62,13 +59,7 @@ export default function MinhasVagas() {
           ))}
         </div>
 
-        {carregando ? (
-          <div role="status" className="flex justify-center p-12">
-            <LoaderCircle className="animate-spin text-neutral-500" />
-          </div>
-        ) : erro ? (
-          <p role="alert" className="p-8 text-center">{erro}</p>
-        ) : lista.length === 0 ? (
+        {lista.length === 0 ? (
           <div className="space-y-3 p-8 text-center">
             <p className="font-medium">{vazio[aba].titulo}</p>
             <p className="text-sm text-neutral-600 dark:text-neutral-300">{vazio[aba].texto}</p>

@@ -14,7 +14,7 @@ export default function Notificacoes() {
   const { abrirMenu } = useOutletContext();
   const { usuario } = useAuth();
   const [prefs, setPrefs] = useLocalStorage("prefsAvisos", PADRAO);
-  const { vagas, carregando } = useVagas();
+  const { vagas, carregando } = useVagas("todas");
 
   // Avisos recentes: as vagas mais novas compatíveis com o curso do aluno
   const recentes = vagas

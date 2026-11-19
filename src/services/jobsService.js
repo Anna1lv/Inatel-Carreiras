@@ -68,9 +68,12 @@ export async function listarVagas({ categoria = "todas", pagina = 1 } = {}) {
   try {
     resposta = await fetch(`/api/vagas?categoria=${categoria}&pagina=${pagina}`);
   } catch {
-    throw new Error("Servidor de vagas indisponível. Inicie com “npm run server” ou use as vagas de exemplo.");
+    throw new Error("Não foi possível conectar ao servidor de vagas.");
   }
-  if (!resposta.ok) throw new Error("Não foi possível obter as vagas do site do Inatel.");
+  if (!resposta.ok) {
+    const detalhe = await resposta.json().catch(() => null);
+    throw new Error(`${detalhe?.erro ?? "Não foi possível obter as vagas do site do Inatel."} (HTTP ${resposta.status})`);
+  }
 
   const dados = await resposta.json();
   const vagas = dados.vagas.map(normalizar);
