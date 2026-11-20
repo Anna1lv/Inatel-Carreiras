@@ -8,8 +8,8 @@ export function AuthProvider({ children }) {
 
   // Login SIMULADO: não consulta o sistema do Inatel.
   // A senha NÃO é guardada em lugar nenhum.
-  function login({ curso, matricula }) {
-    setUsuario({ nome: "Joana Silva", curso, matricula, periodo: 6 });
+    function login({ curso, matricula }) {
+    setUsuario({ nome: "Joana Silva", curso, matricula });
   }
 
   function logout() {

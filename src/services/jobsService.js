@@ -50,7 +50,6 @@ function normalizar(v) {
     encaminhadoPorParceiro: v.encaminhadoPorParceiro,
     linkCandidatura: v.url, // publicação original no site do Inatel
     cursos: classificarCursos(v.titulo),
-    periodoMinimo: null, // a lista não informa
     fonte: "Site do Inatel",
   };
 }

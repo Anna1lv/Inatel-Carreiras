@@ -9,7 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useVagas } from "../hooks/useVagas";
 
-const FILTROS_PADRAO = { curso: true, periodo: true, tipo: "Todos", ordem: "recentes" };
+const FILTROS_PADRAO = { curso: true, tipo: "Todos", ordem: "recentes" };
 const CATEGORIA = { Estágio: "estagio", Emprego: "emprego" }; // o resto usa "todas"
 
 export default function MercadoTrabalho() {
@@ -29,7 +29,6 @@ export default function MercadoTrabalho() {
     const lista = vagas.filter(
       (vaga) =>
         (!filtros.curso || vaga.cursos.length === 0 || vaga.cursos.includes(usuario.curso)) &&
-        (!filtros.periodo || vaga.periodoMinimo == null || vaga.periodoMinimo <= usuario.periodo) &&
         (filtros.tipo === "Todos" || vaga.tipo === filtros.tipo),
     );
 
@@ -44,7 +43,7 @@ export default function MercadoTrabalho() {
   }, [vagas, filtros, usuario]);
 
   function limparFiltros() {
-    setFiltros({ curso: false, periodo: false, tipo: "Todos", ordem: "recentes" });
+    setFiltros({ curso: false, tipo: "Todos", ordem: "recentes" });
   }
 
   const doSite = fonte === "site";

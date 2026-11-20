@@ -31,7 +31,6 @@ const vagas = [
       "Inglês para leitura técnica",
     ],
     cursos: [SOFTWARE, COMPUTACAO],
-    periodoMinimo: 5,
     encaminhadoPorParceiro: true,
   },
   {
@@ -54,7 +53,6 @@ const vagas = [
       "Noções de testes de software",
     ],
     cursos: [SOFTWARE, COMPUTACAO],
-    periodoMinimo: 4,
     encaminhadoPorParceiro: false,
   },
   // ...as vagas 3 a 9 seguem o mesmo molde (veja a tabela)

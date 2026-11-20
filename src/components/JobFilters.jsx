@@ -23,14 +23,6 @@ export default function JobFilters({ filtros, aoMudar, total }) {
         >
           Meu curso
         </button>
-        <button
-          type="button"
-          aria-pressed={filtros.periodo}
-          onClick={() => mudar("periodo", !filtros.periodo)}
-          className={`${chip} ${filtros.periodo ? chipLigado : chipDesligado}`}
-        >
-          Meu período
-        </button>
         <label>
           <span className="sr-only">Tipo de oportunidade</span>
           <select
