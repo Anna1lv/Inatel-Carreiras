@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -25,6 +26,7 @@ export default function Login() {
   const [curso, setCurso] = useState("");
   const [matricula, setMatricula] = useState("");
   const [senha, setSenha] = useState("");
+  const [verSenha, setVerSenha] = useState(false);
   const [erros, setErros] = useState({});
 
   // Já está logado? Vai direto para os avisos.
@@ -92,16 +94,26 @@ export default function Login() {
 
           <div>
             <label htmlFor="senha" className="sr-only">Senha</label>
-            <input
-              id="senha"
-              type="password"
-              autoComplete="off"
-              placeholder="Senha"
-              value={senha}
-              onChange={(e) => setSenha(e.target.value)}
-              aria-invalid={!!erros.senha}
-              className={`${campo} ${borda("senha")}`}
-            />
+            <div className="relative">
+              <input
+                id="senha"
+                type={verSenha ? "text" : "password"}
+                autoComplete="off"
+                placeholder="Senha"
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
+                aria-invalid={!!erros.senha}
+                className={`${campo} px-12 ${borda("senha")}`}
+              />
+              <button
+                type="button"
+                onClick={() => setVerSenha(!verSenha)}
+                aria-label={verSenha ? "Ocultar senha" : "Mostrar senha"}
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-2 text-neutral-500 hover:bg-black/5 dark:text-neutral-400 dark:hover:bg-white/10"
+              >
+                {verSenha ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
             {erros.senha && <p role="alert" className="mt-1 text-sm text-red-600 dark:text-red-400">{erros.senha}</p>}
           </div>
 

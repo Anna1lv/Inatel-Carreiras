@@ -1,10 +1,11 @@
-import { Bell, Info, LoaderCircle } from "lucide-react";
+import { Bell, Info, SearchX } from "lucide-react";
 import { useMemo } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import JobCard from "../components/JobCard";
 import JobFilters from "../components/JobFilters";
+import SkeletonVagas from "../components/SkeletonVagas";
 import { useAuth } from "../context/AuthContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useVagas } from "../hooks/useVagas";
@@ -93,9 +94,9 @@ export default function MercadoTrabalho() {
         />
 
         {carregando ? (
-          <div role="status" className="flex flex-col items-center gap-2 p-12 text-neutral-500 dark:text-neutral-400">
-            <LoaderCircle className="animate-spin" />
-            Carregando vagas...
+          <div role="status">
+            <span className="sr-only">Carregando vagas...</span>
+            <SkeletonVagas />
           </div>
         ) : erro ? (
           <div role="alert" className="space-y-3 p-8 text-center">
@@ -113,6 +114,7 @@ export default function MercadoTrabalho() {
           <>
             {vagasVisiveis.length === 0 ? (
               <div className="space-y-3 p-8 text-center text-neutral-600 dark:text-neutral-300">
+                <SearchX size={40} className="mx-auto text-neutral-400" />
                 <p>Nenhuma vaga com esses filtros{temMais ? " nesta página" : ""}.</p>
                 <Button variante="secundario" className="mx-auto max-w-xs" onClick={limparFiltros}>
                   Limpar filtros

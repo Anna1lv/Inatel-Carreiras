@@ -34,11 +34,11 @@ export function useCurriculo() {
     setErro("");
     if (!arquivo.name.toLowerCase().endsWith(".pdf") || !(await ehPdf(arquivo))) {
       setErro("Formato inválido. Envie um arquivo PDF.");
-      return;
+      return false;
     }
     if (arquivo.size > TAMANHO_MAXIMO) {
       setErro("Arquivo muito grande. O limite é 5 MB.");
-      return;
+      return false;
     }
     const registro = {
       nome: arquivo.name,
@@ -49,18 +49,22 @@ export function useCurriculo() {
     try {
       await salvarCurriculo(registro);
       setCurriculo(registro); // só substitui depois de validar e salvar
+      return true;
     } catch {
       setErro("Não foi possível salvar o arquivo neste navegador.");
+      return false;
     }
   }
 
-    async function remover() {
+  async function remover() {
     setErro("");
     try {
       await removerCurriculo();
       setCurriculo(null);
+      return true;
     } catch {
       setErro("Não foi possível excluir o arquivo.");
+      return false;
     }
   }
 
@@ -75,5 +79,5 @@ export function useCurriculo() {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
-    return { curriculo, carregando, erro, anexar, baixar, remover };
+  return { curriculo, carregando, erro, anexar, baixar, remover };
 }

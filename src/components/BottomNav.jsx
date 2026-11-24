@@ -1,20 +1,23 @@
 import { Bookmark, Briefcase, FileText } from "lucide-react";
 import { NavLink } from "react-router-dom";
-
-const abas = [
-  { rota: "/mercado-de-trabalho", nome: "Vagas", icone: Briefcase, exata: true },
-  { rota: "/mercado-de-trabalho/minhas-vagas", nome: "Minhas vagas", icone: Bookmark },
-  { rota: "/mercado-de-trabalho/curriculo", nome: "Currículo", icone: FileText },
-];
+import { useJobs } from "../context/JobsContext";
 
 // Barra inferior do Mercado de Trabalho (como no wireframe)
 export default function BottomNav() {
+  const { salvas } = useJobs();
+
+  const abas = [
+    { rota: "/mercado-de-trabalho", nome: "Vagas", icone: Briefcase, exata: true },
+    { rota: "/mercado-de-trabalho/minhas-vagas", nome: "Minhas vagas", icone: Bookmark, contador: salvas.length },
+    { rota: "/mercado-de-trabalho/curriculo", nome: "Currículo", icone: FileText },
+  ];
+
   return (
     <nav
       aria-label="Mercado de Trabalho"
       className="fixed inset-x-0 bottom-0 z-30 flex border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:left-72"
     >
-      {abas.map(({ rota, nome, icone: Icone, exata }) => (
+      {abas.map(({ rota, nome, icone: Icone, exata, contador }) => (
         <NavLink
           key={rota}
           to={rota}
@@ -27,7 +30,14 @@ export default function BottomNav() {
             }`
           }
         >
-          <Icone size={22} />
+          <span className="relative">
+            <Icone size={22} />
+            {contador > 0 && (
+              <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-inatel-azul px-1 text-[10px] font-bold text-white dark:bg-inatel-botao-escuro">
+                {contador}
+              </span>
+            )}
+          </span>
           {nome}
         </NavLink>
       ))}

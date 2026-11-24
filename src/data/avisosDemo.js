@@ -5,6 +5,7 @@ export const avisosDemo = [
     setor: "Inatel",
     importante: false,
     assunto: "Novo: Mercado de Trabalho no App Inatel",
+    rota: "/mercado-de-trabalho",
     resumo: "Encontre vagas de estágio e emprego e organize sua candidatura.",
     data: "2026-11-09T08:00:00",
   },

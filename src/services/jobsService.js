@@ -81,7 +81,21 @@ export async function listarVagas({ categoria = "todas", pagina = 1 } = {}) {
 }
 
 export async function buscarVagaPorId(id) {
-  const vaga = [...lerCatalogo(), ...vagasDemo].find((v) => String(v.id) === String(id));
-  if (!vaga) throw new Error("Vaga não encontrada. Volte à lista e abra a vaga novamente.");
+  const procurar = () => [...lerCatalogo(), ...vagasDemo].find((v) => String(v.id) === String(id));
+  let vaga = procurar();
+
+  // Link aberto direto (sem passar pela lista): procura nas primeiras páginas do site
+  if (!vaga && obterFonte() === "site") {
+    for (let pagina = 1; pagina <= 3 && !vaga; pagina++) {
+      try {
+        const { vagas } = await listarVagas({ categoria: "todas", pagina });
+        vaga = vagas.find((v) => String(v.id) === String(id));
+      } catch {
+        break; // servidor indisponível: segue para o erro abaixo
+      }
+    }
+  }
+
+  if (!vaga) throw new Error("Vaga não encontrada. Ela pode ter saído do site. Volte à lista de vagas.");
   return vaga;
 }

@@ -7,13 +7,15 @@ import Modal from "../components/Modal";
 import Selo from "../components/Selo";
 import { useAuth } from "../context/AuthContext";
 import { useJobs } from "../context/JobsContext";
+import { useToast } from "../context/ToastContext";
 import { simularDetalhes } from "../data/detalhesSimulados";
 import { buscarVagaPorId } from "../services/jobsService";
-import { formatarData, formatarPublicacao } from "../utils/formatarData";
+import { formatarData, formatarPublicacao, tempoRelativo } from "../utils/formatarData";
 
 export default function DetalhesVaga() {
   const { id } = useParams(); // identificador da vaga vem da URL
   const { usuario } = useAuth();
+  const { mostrar } = useToast();
   const { salvas, candidaturas, estaSalva, alternarSalva, jaCandidatou, marcarCandidatura } = useJobs();
 
   const [vaga, setVaga] = useState(null);
@@ -79,6 +81,7 @@ export default function DetalhesVaga() {
   function confirmarCandidatura() {
     marcarCandidatura(vaga);
     setModalCandidatura(false);
+    mostrar("Marcada como “já me candidatei”");
   }
 
   if (carregando || erro) {
@@ -105,7 +108,7 @@ export default function DetalhesVaga() {
   const doSite = vaga.fonte === "Site do Inatel";
   const d = doSite ? simularDetalhes(vaga) : vaga; // site: detalhes ilustrativos
   const fatos = [
-    ["Publicada", formatarPublicacao(vaga.dataPublicacao)],
+    ["Publicada", `${tempoRelativo(vaga.dataPublicacao)} · ${formatarPublicacao(vaga.dataPublicacao)}`],
     vaga.prazoEncerramento && ["Encerra", formatarData(vaga.prazoEncerramento)],
     vaga.cargaHoraria && ["Carga", `${vaga.cargaHoraria} h/semana`],
   ].filter(Boolean);
@@ -128,9 +131,9 @@ export default function DetalhesVaga() {
           {[vaga.empresa, vaga.localidade].filter(Boolean).join(" · ") || "Empresa não informada na lista"}
         </p>
 
-        <dl className="my-4 grid grid-flow-col auto-cols-fr gap-2 border-y border-neutral-200 py-3 text-sm dark:border-neutral-800">
+        <dl className="my-4 grid grid-cols-2 gap-x-4 gap-y-3 border-y border-neutral-200 py-3 text-sm dark:border-neutral-800">
           {fatos.map(([rotulo, valor]) => (
-            <div key={rotulo}>
+            <div key={rotulo} className={rotulo === "Publicada" ? "col-span-2" : ""}>
               <dt className="text-xs text-neutral-500 dark:text-neutral-400">{rotulo}</dt>
               <dd className="font-medium">{valor}</dd>
             </div>
@@ -179,7 +182,10 @@ export default function DetalhesVaga() {
       <div className="fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-black lg:left-72">
         <button
           type="button"
-          onClick={() => alternarSalva(vaga)}
+          onClick={() => {
+            alternarSalva(vaga);
+            mostrar(salva ? "Vaga removida das salvas" : "Vaga salva em Minhas Vagas");
+          }}
           aria-pressed={salva}
           className="flex items-center gap-2 rounded-md border border-neutral-300 px-4 py-3 text-base font-medium text-inatel-azul dark:border-neutral-600 dark:text-blue-400"
         >

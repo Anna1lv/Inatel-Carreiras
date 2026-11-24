@@ -1,8 +1,10 @@
+import { ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { formatarDataHora } from "../utils/formatarData";
 
 export default function AvisoCard({ aviso }) {
-  return (
-    <li className="flex gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-800">
+  const conteudo = (
+    <>
       <div
         aria-hidden="true"
         className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-inatel-laranja text-lg text-white"
@@ -27,10 +29,22 @@ export default function AvisoCard({ aviso }) {
           </time>
         </div>
         <p className="truncate text-sm">{aviso.assunto}</p>
-        <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">
-          {aviso.resumo}
-        </p>
+        <p className="truncate text-xs text-neutral-500 dark:text-neutral-400">{aviso.resumo}</p>
       </div>
+    </>
+  );
+
+  // Avisos com "rota" levam a outra tela (ex.: o aviso do Mercado de Trabalho)
+  return aviso.rota ? (
+    <li className="border-b border-neutral-200 dark:border-neutral-800">
+      <Link to={aviso.rota} className="flex items-center gap-3 px-4 py-3 hover:bg-black/5 dark:hover:bg-white/5">
+        {conteudo}
+        <ChevronRight size={18} className="shrink-0 text-neutral-400" />
+      </Link>
+    </li>
+  ) : (
+    <li className="flex gap-3 border-b border-neutral-200 px-4 py-3 dark:border-neutral-800">
+      {conteudo}
     </li>
   );
 }

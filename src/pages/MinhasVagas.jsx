@@ -1,3 +1,4 @@
+import { Bookmark, ClipboardCheck } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
@@ -8,10 +9,12 @@ import { useJobs } from "../context/JobsContext";
 
 const vazio = {
   salvas: {
+    icone: Bookmark,
     titulo: "Nenhuma vaga salva.",
     texto: "Toque no marcador de uma vaga para guardá-la aqui.",
   },
   candidaturas: {
+    icone: ClipboardCheck,
     titulo: "Nenhuma candidatura marcada.",
     texto:
       "Depois de se candidatar no site da empresa, marque a vaga para acompanhar por aqui.",
@@ -61,6 +64,10 @@ export default function MinhasVagas() {
 
         {lista.length === 0 ? (
           <div className="space-y-3 p-8 text-center">
+            {(() => {
+              const Icone = vazio[aba].icone;
+              return <Icone size={40} className="mx-auto text-neutral-400" />;
+            })()}
             <p className="font-medium">{vazio[aba].titulo}</p>
             <p className="text-sm text-neutral-600 dark:text-neutral-300">{vazio[aba].texto}</p>
             <Button variante="secundario" className="mx-auto max-w-xs" onClick={() => navigate("/mercado-de-trabalho")}>

@@ -3,6 +3,7 @@ const cores = {
   verde: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300",
   laranja: "bg-orange-100 text-orange-800 dark:bg-orange-900/40 dark:text-orange-300",
   contorno: "border border-neutral-300 text-neutral-500 dark:border-neutral-600 dark:text-neutral-400",
+    azul: "bg-sky-100 text-sky-800 dark:bg-sky-900/40 dark:text-sky-300",
 };
 
 // Etiqueta pequena (tipo da vaga, modalidade, "Compatível"...)
