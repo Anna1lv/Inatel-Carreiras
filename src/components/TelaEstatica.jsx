@@ -51,7 +51,7 @@ function Bloco({ bloco }) {
     case "titulo":
       return <h2 className="px-4 py-3 text-center text-lg">{bloco.texto}</h2>;
     case "subtitulo":
-      return <h3 className="mt-4 bg-neutral-100 px-3 py-2 text-center text-sm font-medium dark:bg-neutral-800">{bloco.texto}</h3>;
+      return <h2 className="mt-4 bg-neutral-100 px-3 py-2 text-center text-sm font-medium dark:bg-neutral-800">{bloco.texto}</h2>;
     case "linhas":
       return (
         <dl className="space-y-1 px-4 py-3 text-sm">

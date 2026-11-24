@@ -1,10 +1,16 @@
 import { ArrowLeft, Menu } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import BotaoTema from "./BotaoTema";
 
 // Barra superior azul. "onMenu" só existe nas telas que têm menu lateral.
 // "voltarPara" mostra uma seta de voltar. "children" são ações extras à direita.
 export default function Header({ titulo, onMenu, voltarPara, children }) {
+  // Título da aba do navegador acompanha a tela
+  useEffect(() => {
+    document.title = `${titulo} · App Inatel`;
+  }, [titulo]);
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-2 bg-inatel-azul px-2 text-white dark:bg-inatel-azul-escuro">
       {onMenu && (

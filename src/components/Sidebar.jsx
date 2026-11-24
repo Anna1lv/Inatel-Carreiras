@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { secoesMenu } from "../data/menu";
 import Logo from "./Logo";
+import { useEffect } from "react";
 
 const baseItem = "flex w-full items-center gap-5 px-4 py-3 text-left text-[15px]";
 const hover = "hover:bg-black/5 dark:hover:bg-white/10";
@@ -10,6 +11,16 @@ const hover = "hover:bg-black/5 dark:hover:bg-white/10";
 export default function Sidebar({ aberto, aoFechar }) {
   const { usuario, logout } = useAuth();
   const navigate = useNavigate();
+
+  // Esc fecha o menu (no celular)
+  useEffect(() => {
+    if (!aberto) return;
+    function aoTeclar(evento) {
+      if (evento.key === "Escape") aoFechar();
+    }
+    document.addEventListener("keydown", aoTeclar);
+    return () => document.removeEventListener("keydown", aoTeclar);
+  }, [aberto, aoFechar]);
 
   function sair() {
     logout();
@@ -29,8 +40,8 @@ export default function Sidebar({ aberto, aoFechar }) {
 
       <aside
         aria-label="Menu principal"
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto bg-inatel-menu text-neutral-900 transition-transform dark:bg-inatel-menu-escuro dark:text-white lg:translate-x-0 ${
-          aberto ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col overflow-y-auto bg-inatel-menu text-neutral-900 transition-[transform,visibility] duration-200 dark:bg-inatel-menu-escuro dark:text-white lg:translate-x-0 ${
+          aberto ? "translate-x-0" : "invisible -translate-x-full lg:visible"
         }`}
       >
         {/* Logo e identificação do aluno */}
