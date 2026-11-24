@@ -15,7 +15,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="Mercado de Trabalho"
-      className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 flex border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:left-72"
+      className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 flex border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:left-72 lg:justify-center lg:gap-8"
     >
       {abas.map(({ rota, nome, icone: Icone, exata, contador }) => (
         <NavLink
@@ -23,7 +23,7 @@ export default function BottomNav() {
           to={rota}
           end={exata} // "Vagas" só fica ativa na própria rota, não nas filhas
           className={({ isActive }) =>
-            `flex flex-1 flex-col items-center gap-0.5 py-2 text-xs ${
+            `flex flex-1 flex-col items-center gap-0.5 py-2 text-xs lg:w-48 lg:flex-none ${
               isActive
                 ? "font-medium text-inatel-azul dark:text-blue-400"
                 : "text-neutral-500 dark:text-neutral-400"

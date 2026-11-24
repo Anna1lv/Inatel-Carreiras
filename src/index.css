@@ -33,6 +33,25 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+.conteudo-desktop,
+.conteudo-detalhe,
+.conteudo-formulario {
+  width: 100%;
+  margin-inline: auto;
+}
+
+.conteudo-desktop {
+  max-width: 80rem;
+}
+
+.conteudo-detalhe {
+  max-width: 72rem;
+}
+
+.conteudo-formulario {
+  max-width: 64rem;
+}
+
 img,
 svg,
 video,

@@ -12,11 +12,11 @@ export default function JobCard({ vaga, compativel }) {
   const subtitulo = [vaga.empresa, vaga.localidade].filter(Boolean).join(" · ");
 
   return (
-    <li className="relative border-b border-neutral-200 dark:border-neutral-800">
+    <li className="relative border-b border-neutral-200 dark:border-neutral-800 xl:overflow-hidden xl:rounded-lg xl:border xl:border-neutral-200 dark:xl:border-neutral-800">
       {/* O cartão inteiro leva aos detalhes... */}
       <Link
         to={`/mercado-de-trabalho/vaga/${vaga.id}`}
-        className="block py-4 pl-4 pr-14 hover:bg-black/5 dark:hover:bg-white/5"
+        className="block py-4 pl-4 pr-14 hover:bg-black/5 dark:hover:bg-white/5 xl:min-h-40 xl:p-5 xl:pr-16"
       >
         <p className="text-base font-medium leading-snug">{vaga.cargo}</p>
         {subtitulo && <p className="text-sm text-neutral-600 dark:text-neutral-300">{subtitulo}</p>}

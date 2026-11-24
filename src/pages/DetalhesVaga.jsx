@@ -103,7 +103,7 @@ export default function DetalhesVaga() {
     return (
       <>
         <Header titulo="Detalhes" voltarPara="/mercado-de-trabalho" />
-        <main className="mx-auto max-w-3xl p-12 text-center text-neutral-500 dark:text-neutral-400">
+        <main className="conteudo-detalhe p-12 text-center text-neutral-500 dark:text-neutral-400">
           {carregando ? (
             <div role="status" className="flex flex-col items-center gap-2">
               <LoaderCircle className="animate-spin" />
@@ -132,7 +132,7 @@ export default function DetalhesVaga() {
     <>
       <Header titulo="Detalhes" voltarPara="/mercado-de-trabalho" />
 
-      <main className="mx-auto max-w-3xl px-4 pb-28 pt-4">
+      <main className="conteudo-detalhe px-4 pb-28 pt-4">
         <div className="flex flex-wrap gap-1.5">
           <Selo>{vaga.tipo}</Selo>
           {vaga.modalidade && <Selo>{vaga.modalidade}</Selo>}
@@ -204,23 +204,25 @@ export default function DetalhesVaga() {
       </main>
 
       {/* Barra de ações fixa na parte de baixo */}
-      <div className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-black lg:left-72">
-        <button
-          type="button"
-          onClick={() => {
-            alternarSalva(vaga);
-            mostrar(salva ? "Vaga removida das salvas" : "Vaga salva em Minhas Vagas");
-          }}
-          aria-pressed={salva}
-          className="flex items-center gap-2 rounded-md border border-neutral-300 px-4 py-3 text-base font-medium text-inatel-azul dark:border-neutral-600 dark:text-blue-400"
-        >
-          <Bookmark size={20} fill={salva ? "currentColor" : "none"} />
-          {salva ? "Salva" : "Salvar"}
-        </button>
-        <Button onClick={() => setModalSaida(true)} className="flex flex-1 items-center justify-center gap-2">
-          <ExternalLink size={18} />
-          Abrir link da candidatura
-        </Button>
+      <div className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 border-t border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-black lg:left-72">
+        <div className="mx-auto flex w-full max-w-7xl gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              alternarSalva(vaga);
+              mostrar(salva ? "Vaga removida das salvas" : "Vaga salva em Minhas Vagas");
+            }}
+            aria-pressed={salva}
+            className="flex items-center gap-2 rounded-md border border-neutral-300 px-4 py-3 text-base font-medium text-inatel-azul dark:border-neutral-600 dark:text-blue-400"
+          >
+            <Bookmark size={20} fill={salva ? "currentColor" : "none"} />
+            {salva ? "Salva" : "Salvar"}
+          </button>
+          <Button onClick={() => setModalSaida(true)} className="flex flex-1 items-center justify-center gap-2">
+            <ExternalLink size={18} />
+            Abrir link da candidatura
+          </Button>
+        </div>
       </div>
 
       <Modal

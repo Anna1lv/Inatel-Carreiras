@@ -42,7 +42,7 @@ export default function MinhasVagas() {
     <>
       <Header titulo="Minhas Vagas" onMenu={abrirMenu} />
 
-      <main className="mx-auto max-w-3xl">
+      <main className="conteudo-desktop">
         <div role="tablist" className="flex border-b border-neutral-200 dark:border-neutral-800">
           {abas.map(([chave, nome]) => (
             <button
@@ -75,7 +75,7 @@ export default function MinhasVagas() {
             </Button>
           </div>
         ) : (
-          <ul>
+          <ul className="xl:grid xl:grid-cols-2 xl:gap-4 xl:px-4 xl:py-4">
             {lista.map((vaga) => (
               <JobCard key={vaga.id} vaga={vaga} compativel={vaga.cursos.includes(usuario.curso)} />
             ))}

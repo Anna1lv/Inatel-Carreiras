@@ -8,7 +8,6 @@ import DetalhesVaga from "./pages/DetalhesVaga";
 import Login from "./pages/Login";
 import MercadoTrabalho from "./pages/MercadoTrabalho";
 import MinhasVagas from "./pages/MinhasVagas";
-import Notificacoes from "./pages/Notificacoes";
 import SecaoMenu from "./pages/SecaoMenu";
 
 export default function App() {
@@ -25,7 +24,7 @@ export default function App() {
             <Route index element={<MercadoTrabalho />} />
             <Route path="minhas-vagas" element={<MinhasVagas />} />
             <Route path="curriculo" element={<Curriculo />} />
-            <Route path="notificacoes" element={<Notificacoes />} />
+            <Route path="notificacoes" element={<Navigate to="/avisos" replace />} />
           </Route>
 
           {/* Detalhes ficam fora do layout: não têm barra inferior */}

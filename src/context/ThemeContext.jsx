@@ -3,14 +3,8 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 
 const ThemeContext = createContext(null);
 
-function temaDoSistema() {
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-}
-
 export function ThemeProvider({ children }) {
-  const [tema, setTema] = useLocalStorage("tema", temaDoSistema);
+  const [tema, setTema] = useLocalStorage("tema", "light");
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", tema === "dark");

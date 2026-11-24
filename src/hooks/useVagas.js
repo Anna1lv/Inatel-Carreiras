@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { definirFonte, listarVagas, obterFonte } from "../services/jobsService";
 
 // Carrega vagas por páginas (primeira página + "carregar mais").
-export function useVagas(categoria = "todas") {
+export function useVagas(categoria = "todas", habilitado = true) {
   const [fonte, setFonte] = useState(obterFonte);
   const [vagas, setVagas] = useState([]);
   const [pagina, setPagina] = useState(1);
@@ -15,6 +15,17 @@ export function useVagas(categoria = "todas") {
 
   useEffect(() => {
     let atual = true; // ignora respostas de pedidos antigos
+    if (!habilitado) {
+      setVagas([]);
+      setTemMais(false);
+      setErro("");
+      setErroMais("");
+      setCarregando(false);
+      return () => {
+        atual = false;
+      };
+    }
+
     setCarregando(true);
     setErro("");
     setErroMais("");
@@ -35,7 +46,7 @@ export function useVagas(categoria = "todas") {
     return () => {
       atual = false;
     };
-  }, [categoria, fonte, tentativa]);
+  }, [categoria, fonte, tentativa, habilitado]);
 
   async function carregarMais() {
     setCarregandoMais(true);

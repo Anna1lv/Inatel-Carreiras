@@ -1,11 +1,12 @@
 import { Bell, Info, SearchX } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import Button from "../components/Button";
 import Header from "../components/Header";
 import JobCard from "../components/JobCard";
 import JobFilters from "../components/JobFilters";
 import SkeletonVagas from "../components/SkeletonVagas";
+import Switch from "../components/Switch";
 import { useAuth } from "../context/AuthContext";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { useVagas } from "../hooks/useVagas";
@@ -16,6 +17,10 @@ const CATEGORIA = { Estágio: "estagio", Emprego: "emprego" }; // o resto usa "t
 export default function MercadoTrabalho() {
   const { abrirMenu } = useOutletContext();
   const { usuario } = useAuth();
+  const [preferencias, setPreferencias] = useLocalStorage("prefsAvisos", { app: true });
+  const receberAvisosDeVagas = preferencias?.app !== false;
+  const [preferenciasAbertas, setPreferenciasAbertas] = useState(false);
+  const painelPreferencias = useRef(null);
 
   // Os filtros ficam salvos: ao voltar para a tela, continuam como estavam
   const [filtros, setFiltros] = useLocalStorage("filtrosVagas", FILTROS_PADRAO);
@@ -49,19 +54,83 @@ export default function MercadoTrabalho() {
 
   const doSite = fonte === "site";
 
+  useEffect(() => {
+    if (!preferenciasAbertas) return undefined;
+
+    function fecharAoClicarFora(evento) {
+      if (!painelPreferencias.current?.contains(evento.target)) {
+        setPreferenciasAbertas(false);
+      }
+    }
+
+    function fecharAoPressionarEsc(evento) {
+      if (evento.key === "Escape") setPreferenciasAbertas(false);
+    }
+
+    document.addEventListener("pointerdown", fecharAoClicarFora);
+    document.addEventListener("keydown", fecharAoPressionarEsc);
+    return () => {
+      document.removeEventListener("pointerdown", fecharAoClicarFora);
+      document.removeEventListener("keydown", fecharAoPressionarEsc);
+    };
+  }, [preferenciasAbertas]);
+
   return (
     <>
       <Header titulo="Mercado de Trabalho" onMenu={abrirMenu}>
-        <Link
-          to="/mercado-de-trabalho/notificacoes"
-          aria-label="Avisos de vagas"
-          className="rounded-full p-2 hover:bg-white/10"
-        >
-          <Bell size={22} />
-        </Link>
+        <div ref={painelPreferencias}>
+          <button
+            type="button"
+            aria-label="Preferências de avisos"
+            aria-expanded={preferenciasAbertas}
+            aria-controls="preferencias-avisos"
+            onClick={() => setPreferenciasAbertas((abertas) => !abertas)}
+            className="rounded-full p-2 hover:bg-white/10"
+          >
+            <Bell size={22} />
+          </button>
+          {preferenciasAbertas && (
+            <section
+              id="preferencias-avisos"
+              aria-label="Preferências de avisos"
+              className="fixed right-2 top-16 z-40 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-neutral-200 bg-white p-4 text-neutral-900 shadow-xl dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="font-semibold">Avisos de vagas</h2>
+                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-300">
+                    {receberAvisosDeVagas
+                      ? "Mostrar até cinco vagas recentes na aba Avisos."
+                      : "Vagas recentes ocultas na aba Avisos."}
+                  </p>
+                </div>
+                <Switch
+                  rotulo="Receber avisos de vagas no app"
+                  ligado={receberAvisosDeVagas}
+                  aoAlternar={() =>
+                    setPreferencias((atuais) => ({
+                      ...(atuais && typeof atuais === "object" ? atuais : {}),
+                      app: !receberAvisosDeVagas,
+                    }))
+                  }
+                />
+              </div>
+              <p className="mt-3 text-xs text-neutral-500 dark:text-neutral-400">
+                Os avisos aparecem somente no app; não enviam push nem e-mail.
+              </p>
+              <Link
+                to="/avisos"
+                onClick={() => setPreferenciasAbertas(false)}
+                className="mt-3 inline-flex font-medium text-inatel-azul hover:underline dark:text-blue-400"
+              >
+                Ver avisos
+              </Link>
+            </section>
+          )}
+        </div>
       </Header>
 
-      <main className="mx-auto max-w-3xl">
+      <main className="conteudo-desktop">
         <div className="m-4 flex gap-2 rounded-md bg-neutral-100 p-3 text-sm text-neutral-700 dark:bg-neutral-900 dark:text-neutral-300">
           <Info size={18} className="mt-0.5 shrink-0" />
           <div>
@@ -121,7 +190,7 @@ export default function MercadoTrabalho() {
                 </Button>
               </div>
             ) : (
-              <ul className="mt-2 border-t border-neutral-200 dark:border-neutral-800">
+              <ul className="mt-2 border-t border-neutral-200 dark:border-neutral-800 xl:grid xl:grid-cols-2 xl:gap-4 xl:border-0 xl:px-4">
                 {vagasVisiveis.map((vaga) => (
                   <JobCard key={vaga.id} vaga={vaga} compativel={vaga.cursos.includes(usuario.curso)} />
                 ))}

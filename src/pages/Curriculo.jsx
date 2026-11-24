@@ -31,7 +31,7 @@ export default function Curriculo() {
     <>
       <Header titulo="Currículo" onMenu={abrirMenu} />
 
-      <main className="mx-auto max-w-3xl px-4 py-5">
+      <main className="conteudo-formulario px-4 py-5">
         <h2 className="text-2xl font-medium">Meu currículo</h2>
         <p className="mt-1 text-neutral-600 dark:text-neutral-300">
           Guarde uma versão para poder consultar e baixar quando quiser.
