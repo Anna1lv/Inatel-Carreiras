@@ -8,7 +8,7 @@ import BotaoTema from "./BotaoTema";
 export default function Header({ titulo, onMenu, voltarPara, children }) {
   // Título da aba do navegador acompanha a tela
   useEffect(() => {
-    document.title = `${titulo} · App Inatel`;
+    document.title = `${titulo} · Inatel Carreiras`;
   }, [titulo]);
 
   return (

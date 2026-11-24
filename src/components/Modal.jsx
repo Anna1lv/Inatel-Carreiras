@@ -1,9 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 // Janela que sobe de baixo (celular) ou fica no centro (computador).
 // "acoes" recebe os botões; os filhos (children) são o texto.
 export default function Modal({ aberto, titulo, onFechar, acoes, children }) {
   const caixa = useRef(null);
+  const tituloId = useId();
   const fechar = useRef(onFechar);
   useEffect(() => {
     fechar.current = onFechar; // sempre a versão mais recente da função
@@ -53,11 +54,11 @@ export default function Modal({ aberto, titulo, onFechar, acoes, children }) {
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        aria-labelledby="titulo-modal"
+        aria-labelledby={tituloId}
         onClick={(e) => e.stopPropagation()} // clique dentro não fecha
-        className="w-full max-w-md rounded-t-2xl bg-white p-6 text-neutral-900 outline-none dark:bg-neutral-900 dark:text-white sm:rounded-2xl"
+        className="max-h-[calc(100vh-2rem)] w-full max-w-md overflow-y-auto rounded-t-2xl bg-white p-6 text-neutral-900 outline-none dark:bg-neutral-900 dark:text-white sm:rounded-2xl"
       >
-        <h2 id="titulo-modal" className="text-lg font-medium">{titulo}</h2>
+        <h2 id={tituloId} className="text-lg font-medium">{titulo}</h2>
         <div className="mt-3 space-y-2 text-sm text-neutral-600 dark:text-neutral-300">
           {children}
         </div>

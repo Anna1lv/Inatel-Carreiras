@@ -17,9 +17,31 @@
 /* Faz campos nativos (select, barra de rolagem) acompanharem o tema */
 html {
   color-scheme: light;
+  min-width: 320px;
+  -webkit-text-size-adjust: 100%;
 }
 html.dark {
   color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: Inter, system-ui, -apple-system, BlinkMacOSX, "Segoe UI", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+.barra-safe-bottom {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
 .logo-vector svg {

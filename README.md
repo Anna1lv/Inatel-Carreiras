@@ -1,16 +1,25 @@
-# React + Vite
+# Inatel Carreiras
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Aplicacao React/Vite responsiva para avisos academicos e acompanhamento de vagas do Inatel.
 
-Currently, two official plugins are available:
+## Desenvolvimento
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+## Producao
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run lint
+npm run build
+npm run preview
+```
 
-## Expanding the Oxlint configuration
+A pasta `api/` expoe `GET /api/vagas` na Vercel. A configuracao local em `vite.config.js`
+executa a mesma funcao durante `npm run dev` e `npm run preview`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Os dados de vagas do site podem exigir acesso externo. Quando o servico estiver
+indisponivel, a interface permite trocar para vagas ficticias. Sessao, preferencias,
+vagas salvas e o curriculo sao armazenados apenas no navegador.

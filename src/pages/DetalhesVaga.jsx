@@ -1,4 +1,4 @@
-import { Bookmark, ExternalLink, LoaderCircle } from "lucide-react";
+import { Bookmark, ExternalLink, LoaderCircle, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/Button";
@@ -16,7 +16,15 @@ export default function DetalhesVaga() {
   const { id } = useParams(); // identificador da vaga vem da URL
   const { usuario } = useAuth();
   const { mostrar } = useToast();
-  const { salvas, candidaturas, estaSalva, alternarSalva, jaCandidatou, marcarCandidatura } = useJobs();
+  const {
+    salvas,
+    candidaturas,
+    estaSalva,
+    alternarSalva,
+    jaCandidatou,
+    marcarCandidatura,
+    desmarcarCandidatura,
+  } = useJobs();
 
   const [vaga, setVaga] = useState(null);
   const [carregando, setCarregando] = useState(true);
@@ -24,6 +32,7 @@ export default function DetalhesVaga() {
 
   const [modalSaida, setModalSaida] = useState(false);
   const [modalCandidatura, setModalCandidatura] = useState(false);
+  const [modalRemoverCandidatura, setModalRemoverCandidatura] = useState(false);
   const [aguardandoRetorno, setAguardandoRetorno] = useState(false);
 
   // Vaga que o aluno já salvou/marcou: está guardada por inteiro no JobsContext
@@ -82,6 +91,12 @@ export default function DetalhesVaga() {
     marcarCandidatura(vaga);
     setModalCandidatura(false);
     mostrar("Marcada como “já me candidatei”");
+  }
+
+  function confirmarRemocaoCandidatura() {
+    desmarcarCandidatura(vaga.id);
+    setModalRemoverCandidatura(false);
+    mostrar("Marcação de candidatura removida");
   }
 
   if (carregando || erro) {
@@ -162,7 +177,17 @@ export default function DetalhesVaga() {
         </ul>
 
         {candidatou ? (
-          <Selo cor="verde">Você marcou: já me candidatei</Selo>
+          <div className="flex items-center gap-2">
+            <Selo cor="verde">Você marcou: já me candidatei</Selo>
+            <button
+              type="button"
+              onClick={() => setModalRemoverCandidatura(true)}
+              aria-label="Remover marcação de candidatura"
+              className="rounded-full p-1.5 text-neutral-500 hover:bg-black/5 dark:text-neutral-400 dark:hover:bg-white/10"
+            >
+              <X size={18} />
+            </button>
+          </div>
         ) : (
           <button
             type="button"
@@ -179,7 +204,7 @@ export default function DetalhesVaga() {
       </main>
 
       {/* Barra de ações fixa na parte de baixo */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-black lg:left-72">
+      <div className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 flex gap-2 border-t border-neutral-200 bg-white p-3 dark:border-neutral-800 dark:bg-black lg:left-72">
         <button
           type="button"
           onClick={() => {
@@ -239,6 +264,22 @@ export default function DetalhesVaga() {
           Marque para acompanhar esta vaga em Minhas Vagas. O App Inatel não confirma o
           envio feito no site da empresa.
         </p>
+      </Modal>
+
+      <Modal
+        aberto={modalRemoverCandidatura}
+        titulo="Remover marcação?"
+        onFechar={() => setModalRemoverCandidatura(false)}
+        acoes={
+          <>
+            <Button onClick={confirmarRemocaoCandidatura}>Sim, remover</Button>
+            <Button variante="secundario" onClick={() => setModalRemoverCandidatura(false)}>
+              Cancelar
+            </Button>
+          </>
+        }
+      >
+        <p>Tem certeza de que deseja remover a marcação de que já se candidatou a esta vaga?</p>
       </Modal>
     </>
   );

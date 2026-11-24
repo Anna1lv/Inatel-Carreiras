@@ -17,13 +17,23 @@ export function JobsProvider({ children }) {
   // Marcação pessoal do aluno: o app NÃO envia candidatura
   const marcarCandidatura = (vaga) =>
     setCandidaturas((atual) => (atual.some((v) => v.id === vaga.id) ? atual : [vaga, ...atual]));
+  const desmarcarCandidatura = (id) =>
+    setCandidaturas((atual) => atual.filter((v) => v.id !== id));
 
   const estaSalva = (id) => salvas.some((v) => v.id === id);
   const jaCandidatou = (id) => candidaturas.some((v) => v.id === id);
 
   return (
     <JobsContext.Provider
-      value={{ salvas, candidaturas, alternarSalva, marcarCandidatura, estaSalva, jaCandidatou }}
+      value={{
+        salvas,
+        candidaturas,
+        alternarSalva,
+        marcarCandidatura,
+        desmarcarCandidatura,
+        estaSalva,
+        jaCandidatou,
+      }}
     >
       {children}
     </JobsContext.Provider>

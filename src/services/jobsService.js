@@ -46,7 +46,7 @@ function normalizar(v) {
     cargo: v.cargo,
     empresa: v.empresa,
     tipo: v.tipo,
-    dataPublicacao: v.dataPublicacao,
+    dataPublicacao: v.dataPublicacao || "1970-01-01",
     encaminhadoPorParceiro: v.encaminhadoPorParceiro,
     linkCandidatura: v.url, // publicação original no site do Inatel
     cursos: classificarCursos(v.titulo),

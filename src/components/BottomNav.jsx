@@ -15,7 +15,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="Mercado de Trabalho"
-      className="fixed inset-x-0 bottom-0 z-30 flex border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:left-72"
+      className="barra-safe-bottom fixed inset-x-0 bottom-0 z-30 flex border-t border-neutral-200 bg-white dark:border-neutral-800 dark:bg-black lg:left-72"
     >
       {abas.map(({ rota, nome, icone: Icone, exata, contador }) => (
         <NavLink
